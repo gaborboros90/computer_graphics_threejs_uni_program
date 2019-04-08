@@ -1,21 +1,42 @@
-define( ["three", "shader!simple.vert", "shader!simple.frag", "texture"], function ( THREE, simpleVert, simpleFrag, texture ) {
-  // Shader objects support redefining of #defines.
-  // See `simple.frag` file, where `faceColor` is already defined to be white, and we are overriding it to red here
-  simpleFrag.define( "faceColor", "vec3(1.0, 0, 0)" );
+define( ["three", "texture","houseMaterial"], function ( THREE, texture, houseMaterial ) {
   return {
-    bump: new THREE.MeshPhongMaterial( { bumpMap: texture.grass } ),
-    grass: new THREE.MeshBasicMaterial( { map: texture.grass } ),
-    shader: new THREE.ShaderMaterial( {
-      uniforms: {
-        uColor: { type: "c", value: new THREE.Color( "#ff0000" ) }
-      },
-      vertexShader: simpleVert.value,
-      fragmentShader: simpleFrag.value
+    fenceMaterial: new THREE.MeshLambertMaterial({
+      side: THREE.DoubleSide,
+      map: texture.fence
     }),
-    solid: new THREE.MeshLambertMaterial( {
-      color: 0x00dcdc,
-      shading: THREE.FlatShading
+    groundPlane: new THREE.MeshLambertMaterial({
+      map: texture.grass,
+      side: THREE.DoubleSide
     }),
-    wire: new THREE.MeshBasicMaterial( { wireframe: true } )
+    houseBaseMaterial: new THREE.MeshFaceMaterial(houseMaterial),
+    pillar: new THREE.MeshLambertMaterial({
+      color: 0x2f4f4f
+    }),
+    lamp: new THREE.MeshLambertMaterial({
+      transparent: true,
+      color: 0xB0C4DE,
+      opacity: 0.4
+    }),
+    bulb: new THREE.MeshLambertMaterial({
+      color: 0xFFFF00
+    }),
+    roofMaterial: new THREE.MeshLambertMaterial({
+      map: texture.roof,
+      side: THREE.DoubleSide
+    }),
+    fireWall: new THREE.MeshLambertMaterial({
+      color: 0x8B4513
+    }),
+    wire: new THREE.MeshBasicMaterial( { wireframe: true } ),
+    windmill: new THREE.MeshLambertMaterial({
+      color: 0xFFF0F5
+    }),
+    treeMaterial: new THREE.MeshLambertMaterial({
+      color: 0x00ff00,
+      side: THREE.DoubleSide
+    }),
+    tubeMaterial: new THREE.MeshLambertMaterial({
+      color: 0xA9A9A9
+    })
   };
 } );
